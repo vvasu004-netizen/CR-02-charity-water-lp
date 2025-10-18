@@ -100,6 +100,41 @@ main, .site-footer { max-width: var(--max-width); margin: 0 auto; padding: 20px;
   width: 55%;
 }
 
+/* New: shared story row layout
+   Use flexbox to place image and text side-by-side on wider screens.
+   On small screens we stack them (see media queries below). */
+.story .container {
+	/* ensure story content is centered like other containers */
+	max-width: var(--max-width);
+	margin: 0 auto;
+	padding: 0 var(--page-padding);
+}
+
+/* A reusable row used by all story sections */
+.story-row {
+	display: flex;           /* side-by-side layout */
+	gap: 24px;               /* space between image and text */
+	align-items: center;     /* vertically center image and text */
+}
+
+/* Wrap image so we can control its size consistently */
+.story-image-wrap {
+	flex: 0 0 320px;         /* fixed-ish image column on desktop */
+	max-width: 320px;
+}
+
+.story-row .story-image {
+	width: 100%;
+	height: auto;
+	border-radius: 8px;
+	display: block;
+}
+
+/* Make the text column take remaining space */
+.story-row .story-content {
+	flex: 1 1 auto;
+}
+
 /* Small utility styles */
 .muted { color: #5b6b70; font-size: 0.95rem; }
 
@@ -158,4 +193,21 @@ main, .site-footer { max-width: var(--max-width); margin: 0 auto; padding: 20px;
     width:100%;
     box-sizing: border-box;
   }
+}
+
+/* Update responsive stacking: make story rows stack on small screens */
+/* Media query already exists; extend it to target .story-row */
+@media (max-width: 768px) {
+	/* ...existing media rules... */
+
+	/* Stack story rows vertically on small screens for better reading */
+	.story-row {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.story-image-wrap {
+		max-width: 100%;
+		flex: none;
+	}
 }
